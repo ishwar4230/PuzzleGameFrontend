@@ -21,7 +21,7 @@ const Login = () => {
         alert('Fill all the details!');
         else{
         try {
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch('https://puzzlegamebackend.onrender.com/register', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ const Login = () => {
         // For this example, you can print the email and password to the console
         console.log('Login:', email, password);
         try {
-            const response = await fetch('http://localhost:5000/login', {
+            const response = await fetch('https://puzzlegamebackend.onrender.com/login', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

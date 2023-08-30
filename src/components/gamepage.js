@@ -44,7 +44,7 @@ const Gamepage = () => {
     if(email.length==0)
      return;
     try {
-      const response = await fetch('http://localhost:5000/update-bestscores', {
+      const response = await fetch('https://puzzlegamebackend.onrender.com/update-bestscores', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ const Gamepage = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/bestscore`);
+      const response = await fetch(`https://puzzlegamebackend.onrender.com/bestscore`);
       const data = await response.json();
       if (sortbytime)
         setLeaderboardData(data.lowestTimeUsers);
