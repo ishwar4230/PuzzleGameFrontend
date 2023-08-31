@@ -19,6 +19,7 @@ const Gamepage = () => {
   const [sortbytime, setsortbytime] = useState(1);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [moves, setMoves] = useState(0);
+  const [loading, setloading]=useState(0);
 
   const checkwin = () => {
     let win = true;
@@ -76,19 +77,23 @@ const Gamepage = () => {
       return;
     let brr = [...griddata];
     if (rowind - 1 >= 0 && brr[rowind - 1][colind] === 16) {
+      setMoves(moves + 1);
       [brr[rowind - 1][colind], brr[rowind][colind]] = [brr[rowind][colind], brr[rowind - 1][colind]]
     }
     else if (colind - 1 >= 0 && brr[rowind][colind - 1] === 16) {
+      setMoves(moves + 1);
       [brr[rowind][colind - 1], brr[rowind][colind]] = [brr[rowind][colind], brr[rowind][colind - 1]]
     }
     else if (rowind + 1 < 4 && brr[rowind + 1][colind] === 16) {
+      setMoves(moves + 1);
       [brr[rowind + 1][colind], brr[rowind][colind]] = [brr[rowind][colind], brr[rowind + 1][colind]]
     }
     else if (colind + 1 < 4 && brr[rowind][colind + 1] === 16) {
+      setMoves(moves + 1);
       [brr[rowind][colind + 1], brr[rowind][colind]] = [brr[rowind][colind], brr[rowind][colind + 1]]
     }
     setgrid(brr);
-    setMoves(moves + 1);
+    
     checkwin();
     // alert('rowind: ' + rowind + ' colind: ' + colind + ' val: ' + val);
   }
@@ -148,10 +153,14 @@ const Gamepage = () => {
     try {
       const response = await fetch(`https://puzzlegamebackend.onrender.com/bestscore`);
       const data = await response.json();
-      if (sortbytime)
+      if (sortbytime){
+        setloading(1);
         setLeaderboardData(data.lowestTimeUsers);
-      else
+      setloading(0);}
+      else{
+        setloading(1);
         setLeaderboardData(data.lowestMoveUsers);
+      setloading(0);}
 
       //console.log(leaderboardData);
     } catch (error) {
@@ -160,6 +169,8 @@ const Gamepage = () => {
   };
 
   const renderLeaderboard = () => {
+    if(loading)
+    return(<p>Loading...</p>)
     return (
       <ul className="entries">
         {leaderboardData
